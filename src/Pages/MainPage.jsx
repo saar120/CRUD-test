@@ -1,51 +1,42 @@
 import React, { Component } from "react";
-import store from "../api";
+import api from "../api";
+import ItemCard from "../Components/ItemCard";
+import Loader from "../Components/Loader/Loader";
 
 export default class MainPage extends Component {
-  getStoreData = async () => {
-    const { data } = await store.get("/storeItems/");
-    console.log(data);
+  state = { items: [], loading: false };
+
+  setItems = async () => {
+    console.log("set Items");
+    this.setState({ loading: true });
+    const items = await api.getItems();
+    this.setState({ items, loading: false });
   };
 
-  deleteItem = async () => {
-    await store.delete("/storeItems/31");
+  deleteHandler = async (id) => {
+    await api.deleteItem(id);
+    this.setItems();
+    // const deletedItem = this.state.items.find((item) => item.id === id);
+    // const newItemsList = [...this.state.items];
+    // newItemsList.splice(newItemsList.indexOf(deletedItem), 1);
+    // this.setState({ items: newItemsList });
   };
 
-  addItem = async () => {
-    const item = {
-      count: 300,
-      description: "new try hello",
-      image: "http://placeimg.com/640/480/food",
-      itemname: "myNewItem",
-      something: "something1",
-    };
-    const post = await store.post("/storeItems/", item);
-    console.log(post);
+  renderItems = () => {
+    return this.state.items.map((item) => {
+      return <ItemCard item={item} key={item.id} deleteItem={(id) => this.deleteHandler(id)} />;
+    });
   };
-  editItem = async () => {
-    const item = {
-      count: 300,
-      description: "hello hello",
-      id: 300,
-      image: "http://placeimg.com/640/480/food",
-      itemname: "myNewItem",
-      something: "something1",
-    };
-    await store.put("/storeItems/0", item);
+  componentDidMount = () => {
+    this.setItems();
   };
-  // componentDidMount() {
-  //   this.getStoreData();
-  //   // this.deleteItem();
-  // }
 
   render() {
     return (
       <div>
         <h1>Welcome to my site</h1>
-        <button onClick={this.deleteItem}>Delete first item</button>
-        <button onClick={this.getStoreData}>Console log Items</button>
-        <button onClick={this.addItem}>Add mock item</button>
-        <button onClick={this.editItem}>Edit item</button>
+        {this.state.loading && <Loader />}
+        <div className="ui link cards">{this.renderItems()}</div>
       </div>
     );
   }
