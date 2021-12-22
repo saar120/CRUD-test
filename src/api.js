@@ -9,6 +9,10 @@ export default class api {
     const { data } = await store.get("/storeItems");
     return data;
   };
+  static getItem = async (id) => {
+    const { data } = await store.get("/storeItems/" + id);
+    return data;
+  };
 
   static deleteItem = async (id) => {
     return await store.delete("/storeItems/" + id);
@@ -19,7 +23,7 @@ export default class api {
     return post;
   };
 
-  static editItem = async (item) => {
-    await store.put(`/storeItems/${item.id}`, item);
+  static editItem = async (item, id) => {
+    await store.put(`/storeItems/${id}`, item);
   };
 }

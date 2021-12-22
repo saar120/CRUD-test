@@ -7,7 +7,6 @@ export default class MainPage extends Component {
   state = { items: [], loading: false };
 
   setItems = async () => {
-    console.log("set Items");
     this.setState({ loading: true });
     const items = await api.getItems();
     this.setState({ items, loading: false });
