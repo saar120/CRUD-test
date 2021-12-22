@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class ItemCard extends Component {
   render() {
@@ -16,7 +17,9 @@ export default class ItemCard extends Component {
           <span className="right floated">Count: {count}</span>
         </div>
         <div className="ui buttons">
-          <button className="ui button">Edit</button>
+          <Link to={`/edit/${id}`} key={id} className="ui button">
+            Edit
+          </Link>
           <button onClick={() => this.props.deleteItem(id)} className="ui  button">
             Delete
           </button>

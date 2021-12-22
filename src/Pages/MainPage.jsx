@@ -33,8 +33,8 @@ export default class MainPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Welcome to my site</h1>
+      <div className="main-container">
+        <h1>Welcome To My Useless Shop</h1>
         {this.state.loading && <Loader />}
         <div className="ui link cards">{this.renderItems()}</div>
       </div>
