@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Error from "./Components/Error/Error";
 import Navbar from "./Components/Navbar";
@@ -9,9 +9,11 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Route path="/" exact component={MainPage} />
-      <Route path="/edit/:id" exact component={EditPage} />
-      <Route path="/*" exact component={Error} />
+      <Switch>
+        <Route path="/" exact component={MainPage} />
+        <Route path="/edit/:id" exact component={EditPage} />
+        <Route path="/*" exact component={Error} />
+      </Switch>
     </Router>
   );
 }
